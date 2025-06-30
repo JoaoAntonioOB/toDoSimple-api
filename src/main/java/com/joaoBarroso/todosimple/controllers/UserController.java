@@ -1,4 +1,4 @@
-package com.joaoBarroso.todosimple.controller;
+package com.joaoBarroso.todosimple.controllers;
 
 import com.joaoBarroso.todosimple.models.User;
 import com.joaoBarroso.todosimple.services.UserService;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/user")
 @Validated
 public class UserController {
 
@@ -25,7 +25,7 @@ public class UserController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping()
+    @PostMapping
     @Validated(User.CreateUser.class)
     public ResponseEntity<Void> create(@Valid @RequestBody User obj){
         this.userService.create(obj);
@@ -43,7 +43,7 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/{id")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         this.userService.delete(id);
         return ResponseEntity.noContent().build();
