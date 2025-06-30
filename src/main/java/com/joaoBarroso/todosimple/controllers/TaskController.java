@@ -1,7 +1,8 @@
-package com.joaoBarroso.todosimple.controller;
+package com.joaoBarroso.todosimple.controllers;
 
 import com.joaoBarroso.todosimple.models.Task;
 import com.joaoBarroso.todosimple.services.TaskService;
+import com.joaoBarroso.todosimple.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +14,15 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/task/")
+@RequestMapping("/task")
 @Validated
 public class TaskController {
 
     @Autowired
     public TaskService taskService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id){
@@ -28,6 +32,7 @@ public class TaskController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId){
+        this.userService.findById(userId);
         List<Task> obj = this.taskService.findAllByUserId(userId);
         return ResponseEntity.ok().body(obj);
     }
@@ -43,7 +48,7 @@ public class TaskController {
 
     @PutMapping("/{id}")
     @Validated
-    public ResponseEntity<Void> update (@Valid @RequestBody Task obj, @PathVariable Long id){
+    public ResponseEntity<Void> update(@Valid @RequestBody Task obj, @PathVariable Long id){
         obj.setId(id);
         obj = this.taskService.update(obj);
         return ResponseEntity.noContent().build();
