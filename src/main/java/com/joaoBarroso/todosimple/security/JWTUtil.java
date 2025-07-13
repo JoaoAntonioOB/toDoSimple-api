@@ -13,11 +13,11 @@ import java.util.Objects;
 @Component
 public class JWTUtil {
 
-    @Value("$(jwt.secret")
+    @Value("${jwt.secret}")
     private String secret;
 
-    @Value("$(jwt.expiration")
-    private String expiration;
+    @Value("${jwt.expiration}")
+    private Long expiration;
 
     public String gererateToken(String username) {
         SecretKey key = getKeyBySecret();
@@ -35,7 +35,7 @@ public class JWTUtil {
 
     public boolean isValidToken(String token) {
         Claims claims = getClaims(token);
-        if(Objects.isNull(claims)){
+        if(Objects.nonNull(claims)){
             String username = claims.getSubject();
             Date expirationDate = claims.getExpiration();
             Date now = new Date(System.currentTimeMillis());
