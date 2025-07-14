@@ -41,7 +41,7 @@ public class UserController {
     public ResponseEntity<Void> update(@Valid @RequestBody UserUpdateDTO obj, @PathVariable Long id){
         obj.setId(id);
         User user = this.userService.fromDTO(obj);
-        this.userService.upadate(user);
+        this.userService.update(user);
         return  ResponseEntity.noContent().build();
     }
 

@@ -19,7 +19,7 @@ public class JWTUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    public String gererateToken(String username) {
+    public String generateToken(String username) {
         SecretKey key = getKeyBySecret();
         return Jwts.builder()
                 .setSubject(username)
@@ -55,7 +55,7 @@ public class JWTUtil {
     private Claims getClaims(String token) {
         SecretKey key = getKeyBySecret();
         try {
-            return Jwts.parser().setSigningKey(key).build().parseClaimsJwt(token).getBody();
+            return Jwts.parser().setSigningKey(key).build().parseClaimsJws(token).getBody();
         } catch (Exception e) {
             return null;
         }

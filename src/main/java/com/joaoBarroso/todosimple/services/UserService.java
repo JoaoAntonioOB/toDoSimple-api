@@ -57,7 +57,7 @@ public class UserService {
     }
 
     @Transactional
-    public User upadate(User obj){
+    public User update(User obj){
         User newObj = findById(obj.getId());
         newObj.setPassword(obj.getPassword());
         newObj.setPassword(this.bCryptPasswordEncoder.encode(obj.getPassword()));
